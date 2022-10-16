@@ -5,12 +5,13 @@ Authorization: Basic linda password123
 
 ###
 GET http://localhost:8080/management/api/v1/students
-Authorization: Basic tom password321
+Authorization: Basic linda password
+
 
 ###
 POST http://localhost:8080/management/api/v1/students
 Content-Type: application/json
-Authorization: Basic tom password321
+Authorization: Basic linda password
 
 {
   "studentName": "lashawnaij3"
@@ -20,7 +21,7 @@ Authorization: Basic tom password321
 ###
 PUT http://localhost:8080/management/api/v1/students/1
 Content-Type: application/json
-Authorization: Basic tom password321
+Authorization: Basic linda password
 
 {
   "studentName": "lashawnaij3"
