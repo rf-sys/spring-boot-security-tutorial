@@ -29,13 +29,16 @@ public class ApplicationSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
+                .csrf()
+                    .disable()
                 .authorizeRequests()
                     .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
                     .antMatchers("/api/**").hasRole(STUDENT.name())
                     .anyRequest().authenticated()
                 .and()
-                    .httpBasic(Customizer.withDefaults());
+                    .formLogin()
+                        .loginPage("/login").permitAll()
+                        .defaultSuccessUrl("/courses", true);
 
         return http.build();
     }
