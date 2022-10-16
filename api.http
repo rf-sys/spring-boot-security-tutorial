@@ -11,7 +11,7 @@ Authorization: Basic linda password
 ###
 POST http://localhost:8080/management/api/v1/students
 Content-Type: application/json
-Authorization: Basic linda password
+Authorization: Basic tom password
 
 {
   "studentName": "lashawnaij3"
@@ -21,7 +21,7 @@ Authorization: Basic linda password
 ###
 PUT http://localhost:8080/management/api/v1/students/1
 Content-Type: application/json
-Authorization: Basic linda password
+Authorization: Basic tom password
 
 {
   "studentName": "lashawnaij3"
@@ -31,4 +31,4 @@ Authorization: Basic linda password
 ###
 DELETE http://localhost:8080/management/api/v1/students/1
 Content-Type: application/json
-Authorization: Basic tom password321
+Authorization: Basic tom password
