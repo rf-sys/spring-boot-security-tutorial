@@ -25,6 +25,7 @@ public class ApplicationSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
                 .authorizeRequests()
                     .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
                     .antMatchers("/api/**").hasRole(ApplicationUserRole.STUDENT.name())
@@ -49,9 +50,16 @@ public class ApplicationSecurityConfig {
                 .roles(ApplicationUserRole.ADMIN.name()) // ROLE_ADMIN
                 .build();
 
+        var tomUser = User.builder()
+                .username("tom")
+                .password(passwordEncoder.encode("password321"))
+                .roles(ApplicationUserRole.ADMINTRAINEE.name()) // ROLE_ADMINTRAINEE
+                .build();
+
         return new InMemoryUserDetailsManager(
                 annaSmithUser,
-                lindaUser
+                lindaUser,
+                tomUser
         );
     }
 
