@@ -12,6 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
+import java.util.concurrent.TimeUnit;
+
 import static com.example.sst.security.ApplicationUserRole.*;
 
 @Configuration
@@ -37,7 +39,11 @@ public class ApplicationSecurityConfig {
                 .and()
                     .formLogin()
                         .loginPage("/login").permitAll()
-                        .defaultSuccessUrl("/courses", true);
+                        .defaultSuccessUrl("/courses", true)
+                .and()
+                    .rememberMe() // default to 2 weeks
+                        .tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(21)); // extend duration to 3 weeks
+
 
         return http.build();
     }
