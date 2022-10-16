@@ -1,17 +1,17 @@
 ###
 GET http://localhost:8080/api/v1/3
-Authorization: Basic linda password123
+Authorization: Basic {{user}} {{password}}
 
 
 ###
 GET http://localhost:8080/management/api/v1/students
-Authorization: Basic linda password
+Authorization: Basic {{user}} {{password}}
 
 
 ###
 POST http://localhost:8080/management/api/v1/students
 Content-Type: application/json
-Authorization: Basic tom password
+Authorization: Basic {{user}} {{password}}
 
 {
   "studentName": "lashawnaij3"
@@ -21,7 +21,7 @@ Authorization: Basic tom password
 ###
 PUT http://localhost:8080/management/api/v1/students/1
 Content-Type: application/json
-Authorization: Basic tom password
+Authorization: Basic {{user}} {{password}}
 
 {
   "studentName": "lashawnaij3"
@@ -31,4 +31,4 @@ Authorization: Basic tom password
 ###
 DELETE http://localhost:8080/management/api/v1/students/1
 Content-Type: application/json
-Authorization: Basic tom password
+Authorization: Basic {{user}} {{password}}
