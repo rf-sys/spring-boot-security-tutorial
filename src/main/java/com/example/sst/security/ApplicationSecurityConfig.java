@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.util.concurrent.TimeUnit;
 
@@ -40,9 +41,19 @@ public class ApplicationSecurityConfig {
                     .formLogin()
                         .loginPage("/login").permitAll()
                         .defaultSuccessUrl("/courses", true)
+                        .passwordParameter("password") // the same value as default one for showcase purpose
+                        .usernameParameter("username") // the same value as default one for showcase purpose
                 .and()
                     .rememberMe() // default to 2 weeks
-                        .tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(21)); // extend duration to 3 weeks
+                        .tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(21)) // extend duration to 3 weeks
+                        .rememberMeParameter("remember-me") // the same value as default one for showcase purpose
+                .and()
+                    .logout()
+                        .logoutUrl("/logout")
+                        .clearAuthentication(true)
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID", "remember-me")
+                        .logoutSuccessUrl("/login");
 
 
         return http.build();
