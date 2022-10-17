@@ -66,7 +66,7 @@ public class ApplicationSecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(m) {
+    public AuthenticationManager authenticationManager() {
         return new ProviderManager(authenticationProvider());
     }
 
