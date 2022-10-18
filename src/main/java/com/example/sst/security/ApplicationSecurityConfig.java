@@ -1,24 +1,22 @@
 package com.example.sst.security;
 
 import com.example.sst.auth.ApplicationUserService;
+import com.example.sst.jwt.JwtTokenVerifier;
+import com.example.sst.jwt.JwtUsernameAndPasswordAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
-import java.util.concurrent.TimeUnit;
 
 import static com.example.sst.security.ApplicationUserRole.STUDENT;
 
@@ -40,27 +38,15 @@ public class ApplicationSecurityConfig {
         http
                 .csrf()
                     .disable()
+                .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager()))
+                .addFilterAfter(new JwtTokenVerifier(), JwtUsernameAndPasswordAuthenticationFilter.class)
                 .authorizeRequests()
                     .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
                     .antMatchers("/api/**").hasRole(STUDENT.name())
-                    .anyRequest().authenticated()
-                .and()
-                    .formLogin()
-                        .loginPage("/login").permitAll()
-                        .defaultSuccessUrl("/courses", true)
-                        .passwordParameter("password") // the same value as default one for showcase purpose
-                        .usernameParameter("username") // the same value as default one for showcase purpose
-                .and()
-                    .rememberMe() // default to 2 weeks
-                        .tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(21)) // extend duration to 3 weeks
-                        .rememberMeParameter("remember-me") // the same value as default one for showcase purpose
-                .and()
-                    .logout()
-                        .logoutUrl("/logout")
-                        .clearAuthentication(true)
-                        .invalidateHttpSession(true)
-                        .deleteCookies("JSESSIONID", "remember-me")
-                        .logoutSuccessUrl("/login");
+                    .anyRequest().authenticated();
 
         return http.build();
     }

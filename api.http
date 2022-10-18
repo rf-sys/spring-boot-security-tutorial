@@ -1,34 +1,44 @@
-###
+### Get student profile
 GET http://localhost:8080/api/v1/3
-Authorization: Basic {{user}} {{password}}
+Authorization: Bearer {{token}}
 
 
-###
+### Management: Get a list of students
 GET http://localhost:8080/management/api/v1/students
-Authorization: Basic {{user}} {{password}}
+Authorization: Bearer {{token}}
 
 
-###
+### Management: Add new student
 POST http://localhost:8080/management/api/v1/students
 Content-Type: application/json
-Authorization: Basic {{user}} {{password}}
+Authorization: Bearer {{token}}
 
 {
   "studentName": "lashawnaij3"
 }
 
 
-###
+### Management: Update existing student
 PUT http://localhost:8080/management/api/v1/students/1
 Content-Type: application/json
-Authorization: Basic {{user}} {{password}}
+Authorization: Bearer {{token}}
 
 {
   "studentName": "lashawnaij3"
 }
 
 
-###
+### Management: Remove existing student
 DELETE http://localhost:8080/management/api/v1/students/1
 Content-Type: application/json
-Authorization: Basic {{user}} {{password}}
+Authorization: Bearer {{token}}
+
+
+### Login
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+  "username": "{{user}}",
+  "password": "{{password}}"
+}
