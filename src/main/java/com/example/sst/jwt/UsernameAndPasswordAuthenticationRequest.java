@@ -5,6 +5,7 @@ public class UsernameAndPasswordAuthenticationRequest {
     private String password;
 
     public UsernameAndPasswordAuthenticationRequest() {
+        // Jackson parses will use setters to set values for properties. No need to pass parameters to the constructor
     }
 
     public String getUsername() {

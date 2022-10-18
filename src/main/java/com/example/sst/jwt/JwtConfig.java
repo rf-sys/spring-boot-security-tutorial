@@ -1,11 +1,8 @@
 package com.example.sst.jwt;
 
 import com.google.common.net.HttpHeaders;
-import io.jsonwebtoken.security.Keys;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Bean;
 
-import javax.crypto.SecretKey;
 
 @ConfigurationProperties(prefix = "application.jwt")
 public class JwtConfig {
@@ -14,6 +11,7 @@ public class JwtConfig {
     private Integer tokenExpirationAfterDays;
 
     public JwtConfig() {
+        // Spring will populate properties using setters. No need to provide constructor parameters.
     }
 
     public String getSecretKey() {
